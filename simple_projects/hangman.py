@@ -2,48 +2,50 @@ import random
 from words import words
 import string
 
-def get_word(words):
-    word = random.choice(words)
-    while '_' in word or ' ' in word:
+
+def get_valid_word(words):
+    word = random.choice(words)  # randomly chooses something from the list
+    while '-' in word or ' ' in word:
         word = random.choice(words)
 
-    return word
+    return word.upper()
+
 
 def hangman():
-    word = get_word(words)
-    word_letter = set(word.upper()) # created a set that containing the letters of the selected word by computer
-    print('word letter')
-    print(word_letter)
-    #alphabet = set(string.ascii_uppercase)
-    #rint('it is alphabet')
-    #print(alphabet)
-    used_letters = set() # what the user has guessede
+    word = get_valid_word(words)
+    word_letters = set(word)  # letters in the word
+    alphabet = set(string.ascii_uppercase)
+    used_letters = set()  # what the user has guessed
 
-    while len(word_letter) > 0:
-        # user input
-        print('you have used these letters: ', ' '.join(used_letters))
+    time = 7
+
+    # getting user input
+    while len(word_letters) > 0 and time > 0:
+        print('You have', time, 'lives left and you have used these letters: ', ' '.join(used_letters))
         word_list = [letter if letter in used_letters else '-' for letter in word]
-        print('Current word: ',' '.join(word_list))
+        print('Current word: ', ' '.join(word_list))
 
-        global letter 
-        
         user_letter = input('Guess a letter: ').upper()
-        
-        if user_letter in word_letter:
-            letter = user_letter
+        if user_letter in alphabet - used_letters:
             used_letters.add(user_letter)
-            if user_letter in word_letter:
-             word_letter.remove(user_letter)
-        
+            if user_letter in word_letters:
+                word_letters.remove(user_letter)
+                print('')
+
+            else:
+                time = time - 1
+                print('\nYour letter,', user_letter, 'is not in the word.')
+
         elif user_letter in used_letters:
-            print('you have already used that charactor. please try again.')
-        
+            print('\nYou have already used that letter. Guess another letter.')
+
         else:
-            print('Invalid charactor. please try again.')
-        
-            
+            print('\nThat is not a valid letter.')
+
+    if time == 0:
+        print('You died, sorry. The word was', word)
+    else:
+        print('YAY! You guessed the word', word, '!!')
+
 
 hangman()
-user_input = input('Type something:')
-print(user_input)
-    
