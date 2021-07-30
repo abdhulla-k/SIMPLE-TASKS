@@ -30,17 +30,16 @@ def hangman():
             used_letters.add(user_letter)
             if user_letter in word_letters:
                 word_letters.remove(user_letter)
-                print('')
 
             else:
                 time = time - 1
-                print('\nYour letter,', user_letter, 'is not in the word.')
+                print('Your letter,', user_letter, 'is not in the word.')
 
         elif user_letter in used_letters:
-            print('\nYou have already used that letter. Guess another letter.')
+            print('You have already used that letter. Guess another letter.')
 
         else:
-            print('\nThat is not a valid letter.')
+            print('That is not a valid letter.')
 
     if time == 0:
         print('You died, sorry. The word was', word)
