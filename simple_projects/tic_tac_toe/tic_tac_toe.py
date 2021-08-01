@@ -47,14 +47,51 @@ def move(cur_player):
 if __name__ == "__main__":
 
     print('player 1')
-    playar1 = print(input('enter the name:'))
+    player1 = print(input('enter the name:'))
     print('\n')
     print('playar 2')
     player2 = print(input('enter the name:'))
     print('\n')
+    
+    current_player = player1
+    player_choice = {"x" : "", "o" : ""}
+    options = ['x', 'o']
  
-    scoreBoard = {playar1: 0, player2: 0}
+    scoreBoard = {player1: 0, player2: 0}
     score_board(scoreBoard)
+
+    # going to create game loop
+    
+    while True:
+        #playar choice menu
+        print("Turn to choose for "+ current_player)
+        print("Enter 1 for 'x' \nEnter 2 for 'o' \nEnter 3 for Quite game")
+        
+        try:
+            Choice = int(input())
+        except ValueError:
+            print('wrong input!!  Try again')
+            continue
+        #conditions
+        if Choice == 1:
+            player_choice ['x'] = current_player
+            if current_player == player1:
+                player_choice ['o'] = player2
+            else:
+                player_choice ['o'] = player1
+        
+        elif Choice == 2:
+            player_choice ['o'] = current_player
+            if current_player == player1:
+                player_choice['x'] = player1
+            else:
+                player_choice ['x'] = player2
+        
+        elif Choice == 3:
+            print('final scores')
+            score_board(scoreBoard)
+            break
+
 
 
 
