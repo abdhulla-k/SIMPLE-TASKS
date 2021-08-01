@@ -12,6 +12,16 @@ def make_board(values):
     print('| {}  |  {}  |  {}  |'.format(values[6], values[7], values[8]))
     print(' ____   ____   ____')
 
+def score_board(score_board):
+    print("\n\t         SCOREBOARD       ")
+    print("\t==============================")
+ 
+    players = list(score_board.keys())
+    print("\t   ", players[0], "\t    ", score_board[players[0]])
+    print("\t   ", players[1], "\t    ", score_board[players[1]])
+ 
+    print("\t==============================\n")
+
 # values are below
 # want remember the past and prescent moves of player
 def move(cur_player):
@@ -33,4 +43,18 @@ def move(cur_player):
         if move < 1 or move < 9:
             print('wring input!!  Try again')
             continue
+
+if __name__ == "__main__":
+
+    print('player 1')
+    playar1 = print(input('enter the name:'))
+    print('\n')
+    print('playar 2')
+    player2 = print(input('enter the name:'))
+    print('\n')
+ 
+    scoreBoard = {playar1: 0, player2: 0}
+    score_board(scoreBoard)
+
+
 
