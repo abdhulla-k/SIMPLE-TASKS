@@ -1,3 +1,6 @@
+import math
+import time
+from Player import HumanPlayer, RandomComputerPlayer
 class TicTacToe:                         # going to create game
     def __init__(self):                  # need a board for play.
         self.board = self.make_board()
@@ -31,7 +34,33 @@ class TicTacToe:                         # going to create game
     def make_move(self, square, letter):
         if self.board[square] == ' ':
             self.board[square] = letter
+            if self.winner(square,letter):
+                self.curret_winner = letter
             return True
+        return False
+    def winner(self, square, letter):
+        # check all possibilities
+
+        #check the row
+        row_ind = math.floor(square / 3)
+        row = self.board[row_ind*3:(row_ind+1)*3]
+        if all([s == letter for s in row]):
+            return True
+
+        #check the column
+        col_ind = square % 3
+        column = [self.board[col_ind+i*3] for i in range(3)]
+        if all([s == letter for s in column]):
+            return True
+
+        #check the digonal
+        if square % 2 == 0:
+            diagonal1 = [self.board[i] for i in [0, 4, 8]]
+            if all([s == letter for s in diagonal1]):
+                return True
+            diagonal2 = [self.board[i] for i in [2, 4, 6]]
+            if all([s == letter for s in diagonal2]):
+                return True
         return False
 
 def play(game, x_player, o_player, print_game = True):
@@ -52,3 +81,14 @@ def play(game, x_player, o_player, print_game = True):
                 print(letter + f'makes a move to square {square}')
                 game.print_board()
                 print('') # an empty line
+                # find winner
+            if game.current_winner:
+                if print_game:
+                    print(letter + "winns !")
+                    return letter  # ends the loop and exits the game.
+            letter = 'O' if letter == 'X' else 'X' # switches player
+
+        time.sleep(.8)
+    if print_game:
+        print("It\'s a tie")
+    
