@@ -8,5 +8,5 @@ def naive_serch(l, target):
 
 
 l = [1,2,3,4,5,6,8,9,10,7]
-target = input("Enter the target number")
+target = int(input("Enter the target number"))
 print (str(naive_serch(l,target)))
