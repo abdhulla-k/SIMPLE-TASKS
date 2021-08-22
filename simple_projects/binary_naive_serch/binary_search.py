@@ -12,7 +12,7 @@ def binary_search(l, target, low = None, high = None):
     midpoint = (low + high) // 2    # average of l
 
     if l[midpoint] == target:
-        return midpoint
+        return (midpoint , 'th position is condaining the number')
 
     elif target < l[midpoint]:
         return binary_search(l, target, low, midpoint - 1)

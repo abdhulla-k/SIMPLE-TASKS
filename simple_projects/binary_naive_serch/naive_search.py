@@ -3,7 +3,7 @@
 def naive_serch(l, target):
     for i in range(len(l)):
         if l[i] == target:
-            return i
+            return (i, 'th position is containing the number')
     return "target is not containing the list"
 
 
