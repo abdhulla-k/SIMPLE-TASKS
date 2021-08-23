@@ -10,6 +10,7 @@ class Board:
 
         #let's crate the board
         self.board = self.make_new_board()
+        self.assign_values_to_board()
 
         #initialize a set to keep track of which location we have uncovered
         #we will save (row, cal) tuples into this set
@@ -31,13 +32,37 @@ class Board:
             col = loc % self.dim_size
             
             if board[row][col] == '*':
-                #already existing a bomb
+                #already existing a bomb. keep goning
                 continue
 
             board[row][col] = '*' #planing a bomb
             bombs_planed += 1
             
         return board
+    
+    def assign_values_to_board(self):
+        for r in range(self.dim_size):
+            for c in range(self.dim_size):
+                if self.board [r][c] == '*':
+                    continue
+                self.board [r][c] = self.get_num_neighboring_bombs(r,c)
+    
+    def get_num_neighboring_bombs(self, row, col):
+        # let's iterate through each of the neighboring positions and sum number of bombs
+        #top left: (row - 1, col - 1) , top middle: (row - 1, col) , top right: (row - 1, col + 1)
+        #left: (row, col - 1) , right: (row, col+1 )
+        #bottom left: ( row + 1, col - 1) , bottom middle: (row + 1, col) , bottom right: (row + 1, col + 1)
+
+        number_neighber_bombs = 0
+        for r in range(max(0,row-1), min(self.dim_size-1, row+1)+1):
+            for c in range(max(1,col-1), min(self.dim_size-1, col+1)+1):
+                if r == row and c == col:#our position
+                    continue
+                if self.board [r][c] == '*':
+                    number_neighber_bombs += 1
+                    
+        return number_neighber_bombs
+
 
 
 
