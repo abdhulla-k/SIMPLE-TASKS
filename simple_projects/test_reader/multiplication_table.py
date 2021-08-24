@@ -1,3 +1,4 @@
+
 n = input("Enter a number")
 
 dic = {
