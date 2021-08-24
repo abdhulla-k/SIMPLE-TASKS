@@ -62,9 +62,31 @@ class Board:
                     number_neighber_bombs += 1
                     
         return number_neighber_bombs
-
-
+    
+    def dig(self, row, col ):    # keep tracking
+        # dig at the location
+        # return True if successful dig, False if bomb dig
+        self.dug.add((row,col))
+        # a few scenarios:
+        # hit a bomb. then game over
+        if self.board[row][col] == '*':
+            return False
+        # dig at location with neighboring bombs 
+        elif self.board[row][col] > 0:
+            return True
+        # dig at location with no neigboring boms
+        
+        for r in range(max(0,row-1), min(self.dim_size-1, row+1)+1):
+            for c in range(max(1,col-1), min(self.dim_size-1, col+1)+1):
+                if (r,c) in self.dug:
+                    continue
+                self.dig(r,c)
+        
+        return True
+    
+    
 
 
 def Play(dim_size = 10, num_bombs = 10):
-    pass
+    #create the board and plant the bombs
+    board = Board(dim_size, num_bombs)
