@@ -1,4 +1,5 @@
 import random
+import re
 
 # lets create a board object to represent the minesweeper game
 
@@ -86,11 +87,11 @@ class Board:
     
     def __str__(self):
         # firs let's crate a new array that represent what the user would see
-        visible_board = [[None for i in range(self.dim_size)] for None in range(self.dim_size)]
+        visible_board = [[None for _ in range(self.dim_size)] for _ in range(self.dim_size)]
         for row in range(self.dim_size):
             for col in range(self.dim_size):
                 if (row,col) in self.dug:
-                     visible_board[row][col] = str(self.board[row][col])
+                    visible_board[row][col] = str(self.board[row][col])
                 else:
                     visible_board[row][col] = ' '
         
@@ -134,6 +135,32 @@ class Board:
 
             
 
-def Play(dim_size = 10, num_bombs = 10):
-    #create the board and plant the bombs
+# play the game
+def play(dim_size=10, num_bombs=10):
+    # create the board and plant the bombs
     board = Board(dim_size, num_bombs)
+
+    safe = True 
+
+    while len(board.dug) < board.dim_size ** 2 - num_bombs:
+        print(board)
+        
+        user_input = re.split(',(\\s)*', input("Where would you like to dig? Input as row,col: "))  # '0, 3'
+        row, col = int(user_input[0]), int(user_input[-1])
+        if row < 0 or row >= board.dim_size or col < 0 or col >= dim_size:
+            print("Invalid location. Try again.")
+            continue
+
+        safe = board.dig(row, col)
+        if not safe:
+            break
+
+    if safe:
+        print("CONGRATULATIONS!!!! YOU ARE VICTORIOUS!")
+    else:
+        print("SORRY GAME OVER :(")
+        board.dug = [(r,c) for r in range(board.dim_size) for c in range(board.dim_size)]
+        print(board)
+
+if __name__ == '__main__':
+    play()
