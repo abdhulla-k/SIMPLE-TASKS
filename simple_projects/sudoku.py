@@ -1,6 +1,3 @@
-from typing import Tuple
-
-
 def find_next_empty(puzzle):
     # find next row and col on the puzzle that's not filled yet --> rep with -1
     # return row, col = non, non if there is not an empty space
@@ -53,4 +50,16 @@ def solve_sudoku(puzzle):
     # if there is a place to put a number, then make a guess between 1 and 9
     for guess in range(1, 10):
         if is_valid(puzzle, guess, row, col):
+            # if this is valid, then placd that guess on puzzle
+            puzzle[row][col] = guess
+            # recursively call our function
+            if solve_sudoku(puzzle):
+                return True
+        
+        # if not valid or our guess does not solve the puzzle, then we need to  backtrack and try a new number
+        puzzle[row][col] = -1
+    
+    # if non of the numbers that we try work, then we puzzle is unsolvable
+    return False
+
 
