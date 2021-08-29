@@ -4,7 +4,7 @@ def find_next_empty(puzzle):
     for r in range(9): # 9 == 0, 1, 2, ................ , 8.
         for c in range(9):
             if puzzle [r][c] == -1:
-                return -1
+                return r, c
     
     return None, None # there is not an empty space
 
@@ -63,3 +63,19 @@ def solve_sudoku(puzzle):
     return False
 
 
+if __name__ == '__main__':
+    example_board = [
+        [3, 9, -1,   -1, 5, -1,   -1, -1, -1],
+        [-1, -1, -1,   2, -1, -1,   -1, -1, 5],
+        [-1, -1, -1,   7, 1, 9,   -1, 8, -1],
+
+        [-1, 5, -1,   -1, 6, 8,   -1, -1, -1],
+        [2, -1, 6,   -1, -1, 3,   -1, -1, -1],
+        [-1, -1, -1,   -1, -1, -1,   -1, -1, 4],
+
+        [5, -1, -1,   -1, -1, -1,   -1, -1, -1],
+        [6, 7, -1,   1, -1, 5,   -1, 4, -1],
+        [1, -1, 9,   -1, -1, -1,   2, -1, -1]
+    ]
+    print(solve_sudoku(example_board))
+    print(example_board)
