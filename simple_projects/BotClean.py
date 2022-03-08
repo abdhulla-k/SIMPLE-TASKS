@@ -9,29 +9,43 @@ def next_move(posr,posc,board):
                 WaystPlaces.append(place)
     PositionBot = [posr,posc]        # bot position
 
-    def MakeMove(PositionBot,CurrentLenI,CurrentLenJ):
-        pass
+    def MakeMove(PositionBot,CurrentLenI,CurrentLenJ,LhsOrRhs):
+        for i in range(CurrentLenI):
+            print('DOWN')
+        if CurrentLenJ == 0:
+            print('CLEAR')
+        if LhsOrRhs == -1:
+            for i in range(CurrentLenJ):
+                print('LEFT')
+            print('CLEAR')
+        elif LhsOrRhs == 0:
+            for i in range(CurrentLenJ):
+                print('CLEAR')
+        elif LhsOrRhs == 1:
+            for i in range(CurrentLenJ):
+                print('RIGHT')
+            print('CLEAR')
 
 
     def FindDistance(PositionBot,waystPlaces):
-        print(waystPlaces)
         for i in range(5):
            for j in range(5):
                if [i,j] in waystPlaces:
-                   print('positionBot is: '+str(PositionBot))
-                   print([i,j])
+                   LhsOrRhs = 0
                    CurrentLenI = abs(i - PositionBot[0])# distance between bot space and waystPlace in i
                    CurrentLenJ = abs(j - PositionBot[1])# distance between bot space and waystPlace in j
-                   print(str(i)+'-'+str(PositionBot[0]))
-                   print(CurrentLenI)
-                   print('j')
-                   print(str(j)+'-'+str(PositionBot[1]))
-                   print(CurrentLenJ)
-                   MakeMove(PositionBot,CurrentLenI,CurrentLenJ)  # called PrintMove function
+                   if PositionBot[1] > j:
+                       LhsOrRhs = -1
+                   elif PositionBot[1] == j:
+                       LhsOrRhs = 0
+                   else:
+                       LhsOrRhs = 1
+                   MakeMove(PositionBot,CurrentLenI,CurrentLenJ,LhsOrRhs)  # called PrintMove function
                    PositionBot = [i,j]
 
 
     FindDistance(PositionBot,WaystPlaces)
+    
             
 
 
@@ -62,4 +76,11 @@ game = [
     ['-', 'd', '-', '-', 'd'],
     ['d', '-', '-', '-', '-']   
 ]
-next_move(0,1,game)
+game2 = [
+    ['b', 'd', '-', '-', '-'],
+    ['-', 'd', '-', '-', '-'],
+    ['-', '-', '-', 'd', '-'],
+    ['-', '-', '-', 'd', '-'],
+    ['-', '-', 'd', '-', 'd']   
+]
+next_move(0,0,game2)
